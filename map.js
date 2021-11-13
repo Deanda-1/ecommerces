@@ -1,5 +1,8 @@
-var convert = require('./convert'),
-    func = convert('map', require('../map'));
-
-func.placeholder = require('./placeholder');
-module.exports = func;
+export default function map(arr, fn) {
+    var res = [],
+        i;
+    for (i = 0; i < arr.length; ++i) {
+        res.push(fn(arr[i], i));
+    }
+    return res;
+}

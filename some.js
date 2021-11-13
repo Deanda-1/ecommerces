@@ -1,5 +1,20 @@
-var convert = require('./convert'),
-    func = convert('some', require('../some'));
+var some;
+if (Array.prototype.some) {
+    some = Array.prototype.some;
+} else {
+    some = function (fun) {
+        var t = Object(this),
+            len = t.length >>> 0,
+            i;
 
-func.placeholder = require('./placeholder');
-module.exports = func;
+        for (i = 0; i < len; i++) {
+            if (i in t && fun.call(this, t[i], i, t)) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+}
+
+export { some as default };
